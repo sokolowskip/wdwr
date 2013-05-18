@@ -1,0 +1,10 @@
+reset;
+model production.mod;
+data production.dat;
+solve;
+display r;
+display o;
+display br;
+display bo;
+display pr;
+display po;

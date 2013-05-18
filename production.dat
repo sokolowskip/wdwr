@@ -1,0 +1,14 @@
+data;
+
+set R := R1 R2;
+set O := O1 O2 O3;
+set MONTHS := M1 M2 M3;
+
+param R_PRICES1:  M1    M2    M3 :=
+          R1   90    125   95
+          R2   110   95    130;
+
+param O_PRICES1:  M1    M2    M3 :=
+             O1   95    120   85
+             O2   125   95    110
+             O3   105   125   95;
