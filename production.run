@@ -1,3 +1,4 @@
+options solver minos;
 reset;
 model production.mod;
 data production.dat;
@@ -8,3 +9,6 @@ display br;
 display bo;
 display pr;
 display po;
+display ppr;
+display ppo;
+display RESULT;

@@ -5,10 +5,28 @@ set O := O1 O2 O3;
 set MONTHS := M1 M2 M3;
 
 param R_PRICES1:  M1    M2    M3 :=
-          R1   90    125   95
-          R2   110   95    130;
+             R1   90    125   95
+             R2   110   95    130;
 
 param O_PRICES1:  M1    M2    M3 :=
              O1   95    120   85
              O2   125   95    110
              O3   105   125   95;
+
+param R_PRICES2:  M1    M2    M3 :=
+             R1   120   90    115
+             R2   95    115   110;
+
+param O_PRICES2:  M1    M2    M3 :=
+             O1   120   100   125
+             O2   80    120   90
+             O3   130   100   125;
+
+param R_PRICES3:  M1    M2    M3 :=
+             R1   85    115   90
+             R2   125   85    125;
+
+param O_PRICES3:  M1    M2    M3 :=
+             O1   100   130   90
+             O2   110   90    115
+             O3   95    130   100;
