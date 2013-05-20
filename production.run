@@ -1,4 +1,4 @@
-options solver cplex;
+options solver lpsolve;
 reset;
 model production.mod;
 data production.dat;
@@ -6,4 +6,5 @@ solve;
 display oil;
 display b_oil;
 display pp_oil;
+
 display RESULT;

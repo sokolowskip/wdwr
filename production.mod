@@ -27,7 +27,7 @@ subject to refining_in_month_lower {i in TYPES, k in MONTHS}:
 subject to refining_in_month_upper {i in TYPES, k in MONTHS}: 
 	oil[i,k] <= 220 * b_oil[i,k];
 
-# Nastepne 2 ogranizenia zapewniaja wymagana twardosc oleju.
+# Nastepne 2 ogranizenia zapewniaja wymagana twardosc oleju w kazdym z miesiecy.
 # Podane nierownosci wynikaja juz  z lekkiego przeksztalcenia.
 # I tak na przykladzie ograniczenia gornego: (twardosc < 6) losc kazdego uzytego polproduktu jest mnozona przez odpowiednia wage po lewej stronie,
 # a po prawej suma wszystkich polproduktow przez 6. Po przeniesieniu wszystkich zmiennych na lewo nierownosc przyjmuje postac jak ponizej. 
