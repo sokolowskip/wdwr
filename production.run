@@ -1,14 +1,9 @@
-options solver minos;
+options solver cplex;
 reset;
 model production.mod;
 data production.dat;
 solve;
-display r;
-display o;
-display br;
-display bo;
-display pr;
-display po;
-display ppr;
-display ppo;
+display oil;
+display b_oil;
+display pp_oil;
 display RESULT;
