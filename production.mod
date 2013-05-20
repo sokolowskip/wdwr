@@ -19,7 +19,7 @@ subject to max_vtype_refining {k in MONTHS}: # w danym miesiacu mozna rafinowac 
 subject to max_nvtype_refining {k in MONTHS}:  # w danym miesiacu mozna rafinowac maksymalnie 270 ton oleju nieroslinnego
 	oil['O1',k] + oil['O2',k] + oil['O3',k] <= 270;
 
-# nastepne 2 ograniczenia sa typu 20 * b_oil <= oil <= 270 * oil
+# nastepne 2 ograniczenia sa typu 20 * b_oil <= oil <= 270 * b_oil
 # oznacza, to ze albo oleju jest uzyte ponad 20, albo wcale
 
 subject to refining_in_month_lower {i in TYPES, k in MONTHS}: 
