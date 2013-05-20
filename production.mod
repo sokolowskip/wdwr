@@ -49,6 +49,11 @@ subject to store_M2 {i in TYPES}:
 subject to store_M3 {i in TYPES}:
 	pp_oil[i, 'M3'] <= 200 + oil[i, 'M1'] + oil[i, 'M2'] + oil[i,'M3'] - pp_oil[i,'M1'] - pp_oil[i,'M2'];
 
+#ograniczenie na maksymalna ilosc przechowywanego rodzaju oleju,
+# wprowadzone tylko po 3 miesiacach, wczesniej nie da sie go przekroczyc z powodu ograniczen na zakupy (200 + 2 * 270 < 800)
+subject to store_max {i in TYPES}:
+	200 + oil[i, 'M1'] + oil[i, 'M2'] + oil[i,'M3'] - pp_oil[i,'M1'] - pp_oil[i,'M2'] <= 800;
+	
 # na koniec musimy miec dalej 200 ton zapasu, czyli mozemy zuuzyc maksymalnie tyle polproduktu ile zakupilismy oleju surowego
 subject to store_end {i in TYPES}:
 	sum { k in MONTHS} pp_oil[i,k] <= sum { k in MONTHS} oil[i,k];
