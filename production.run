@@ -7,4 +7,6 @@ display oil;
 display b_oil;
 display pp_oil;
 
+display y;
+
 display RESULT;

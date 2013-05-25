@@ -2,6 +2,9 @@ data;
 
 set MONTHS := M1 M2 M3;
 set TYPES := R1 R2 O1 O2 O3;
+set SCENARIOS := S1 S2 S3;
+
+param risk_tolarance := 0.2;
 
 param PRICES1:  M1    M2    M3 :=
              R1   90    125   95
@@ -30,3 +33,8 @@ param MAX_PRODUCTION :=
              O1  270
              O2  270
              O3  270;
+			
+param PROB :=
+	S1   0.1
+	S2   0.2
+	S3   0.7;

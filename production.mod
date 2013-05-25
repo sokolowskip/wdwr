@@ -1,10 +1,13 @@
 set MONTHS; # miesiace
 set TYPES; # rodzaje oleju
+set SCENARIOS;
 
 param PRICES1 {TYPES, MONTHS};
 param PRICES2 {TYPES, MONTHS};
 param PRICES3 {TYPES, MONTHS};
 param MAX_PRODUCTION {TYPES};
+param PROB {SCENARIOS};
+param risk_tolarance;
 
 var oil {TYPES, MONTHS} >= 0; #rafinacja poszczegolnego rodzaju oleju w miesiacu
 var b_oil {TYPES, MONTHS} >=0, <=1, integer; #pomocnicza zmienna binarna pozwalajaca na spelnienie warunku rafinacji conajmniej 20 ton
@@ -12,6 +15,10 @@ var pp_oil {TYPES, MONTHS} >=0; #produkcja polproduktu
 
 var income; #przychod
 var store_cost; #koszt magazynowania
+
+var ni;
+var y{SCENARIOS}; # zysk przy odpowiednich realizacjach
+var d_minus{SCENARIOS} >= 0;
 
 subject to max_vtype_refining {k in MONTHS}: # w danym miesiacu mozna rafinowac maksymalnie 220 ton oleju roslinnego
 	oil['R1',k] + oil['R2',k]<= 220;
@@ -63,8 +70,18 @@ subject to store_cost_subject:
 	
 subject to income_subject: # zyskiem wbedzie suma ilosci uzytych polproduktow pomonozona przez 170
 	income = 170 * (sum{i in TYPES,k in MONTHS} pp_oil[i,k]);
+
+subject to y_1:
+	y['S1'] = income - store_cost - (sum {i in TYPES, k in MONTHS} PRICES1[i,k] * oil[i,k]);
+
+subject to y_2:
+	y['S2'] = income - store_cost - (sum {i in TYPES, k in MONTHS} PRICES2[i,k] * oil[i,k]);
+
+subject to y_3:
+	y['S3'] = income - store_cost - (sum {i in TYPES, k in MONTHS} PRICES3[i,k] * oil[i,k]);
+
+subject to d_minus_subject {s in SCENARIOS}:
+	d_minus[s] >= ni - y[s];
 	
 maximize RESULT:
-	0.1 * (income - store_cost - (sum {i in TYPES, k in MONTHS} PRICES1[i,k] * oil[i,k])) +
-	0.2 * (income - store_cost - (sum {i in TYPES, k in MONTHS} PRICES2[i,k] * oil[i,k])) +
-	0.7 * (income - store_cost - (sum {i in TYPES, k in MONTHS} PRICES3[i,k] * oil[i,k]));
+	ni - (1/risk_tolarance) * (sum{s in SCENARIOS} PROB[s] * d_minus[s]);
