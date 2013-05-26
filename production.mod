@@ -7,7 +7,7 @@ param PRICES2 {TYPES, MONTHS};
 param PRICES3 {TYPES, MONTHS};
 param MAX_PRODUCTION {TYPES};
 param PROB {SCENARIOS};
-param risk_tolarance;
+param risk_tolerance;
 
 var oil {TYPES, MONTHS} >= 0; #rafinacja poszczegolnego rodzaju oleju w miesiacu
 var b_oil {TYPES, MONTHS} >=0, <=1, integer; #pomocnicza zmienna binarna pozwalajaca na spelnienie warunku rafinacji conajmniej 20 ton
@@ -84,4 +84,4 @@ subject to d_minus_subject {s in SCENARIOS}:
 	d_minus[s] >= ni - y[s];
 	
 maximize RESULT:
-	ni - (1/risk_tolarance) * (sum{s in SCENARIOS} PROB[s] * d_minus[s]);
+	ni - (1/risk_tolerance) * (sum{s in SCENARIOS} PROB[s] * d_minus[s]);
