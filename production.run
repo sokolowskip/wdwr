@@ -1,12 +1,18 @@
 options solver lpsolve;
+options solver_msg 0;
 reset;
 model production.mod;
 data production.dat;
+let risk_tolerance := 0.01;
+for {1..100}{
 solve;
-display oil;
-display b_oil;
-display pp_oil;
 
-display y;
+#display oil;
+#display b_oil;
+#display pp_oil;
+#display y;
 
-display RESULT;
+display risk_tolerance;
+display RESULT >> res.txt;
+let risk_tolerance := risk_tolerance + 0.01
+}

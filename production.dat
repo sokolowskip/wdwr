@@ -4,7 +4,7 @@ set MONTHS := M1 M2 M3;
 set TYPES := R1 R2 O1 O2 O3;
 set SCENARIOS := S1 S2 S3;
 
-var risk_tolerance := 0.4;
+param risk_tolerance := 0.1;
 
 param PRICES1:  M1    M2    M3 :=
              R1   90    125   95
