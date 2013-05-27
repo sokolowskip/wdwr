@@ -1,27 +1,9 @@
 options solver lpsolve;
-options solver_msg 0;
 reset;
+
 model production.mod;
 data production.dat;
-let risk_tolerance := 0.01;
-#for {1..100}{
-	#solve;
-	#display risk_tolerance;
-	#display RESULT >> res.txt;
-	#let risk_tolerance := risk_tolerance + 0.01
-#}
-
-let risk_tolerance := 0.1;
 solve;
-display y >> resy.txt;
-display RESULT >> resy.txt;
 
-let risk_tolerance := 0.4;
-solve;
-display y >> resy.txt;
-display RESULT >> resy.txt;
-
-let risk_tolerance := 0.7;
-solve;
-display y >> resy.txt;
-display RESULT >> resy.txt;
+display oil;
+display pp_oil;
