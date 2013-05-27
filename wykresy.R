@@ -1,8 +1,9 @@
-require('ggplot2')
-df <- read.csv('gr_efekt.csv') # wczytaj wartosci z optymalizacji
+require('ggplot2') # biblioteka rysujaca
+
+df <- read.csv('gr_efekt.csv') # wczytaj wartosci z przeprowadzonych optymalizacji
 brzegowe <- c(which(df[,1] == min(df[,1])), # znajdz indeksy dla maks. wyniku i min. ryzyka
               which(df[,2] == max(df[,2])))
-# narysuj
+# narysuj zbior rozwiazan efektywnych
 p1 <- ggplot(df,aes(x=ryzyko,y=wynik))+
   geom_line()+
   ggtitle("Zbiór rozwi¹zañ efektywnych")+
@@ -18,20 +19,21 @@ dev.off()
 #podaj wartosci dla maks. wyniku i min. ryzyka
 print(df[brzegowe,])
 
-# zad 4
+# zbior punktow do rysowania dystrybuant
+# p. pom. to punkty pomocnicze sluzace do przedstawienia wykresu w przystepniejszej formia
 df <- data.frame(
   prob=c(0,0,.3,.3,1,1,0,0,.2,.2,.3,.3,1,1,0,0,.2,.2,.3,.3,1,1),
   point = c(rep("p1",6),rep("p2",8),rep("p3",8)),
   profit = c(
-    65000,
-    79540.3,
+    65000, # p. pom.
+    79540.3,# p. pom.
     79540.3,
     80834.4, # p. pom.
     80834.4,
     97000, #p pom
     
-    65000,
-    72650,
+    65000,# p. pom.
+    72650,# p. pom.
     72650,
     85200, #p pom
     85200,
@@ -39,8 +41,8 @@ df <- data.frame(
     91300,
     97000, #p pom
     
-    65000,
-    67775.7,
+    65000,# p. pom.
+    67775.7,# p. pom.
     67775.7,
     89012.9, #p pom
     89012.9,
@@ -50,6 +52,7 @@ df <- data.frame(
     )
   )
 
+# narysuj dystrybuanty pierwszego rzedu
 p2 <- ggplot(df,aes(x=profit,y=prob)) +
   geom_line(aes(color=point))+
   xlim(65000,97001)+
@@ -60,24 +63,26 @@ png("dominacja.png")
   print(p2)
 dev.off()
 
-# dystrybuanty drugiego rzêdu
+# funkcje okreslajace dystrybuanty drugiego rzêdu
+# punkt 1
 fun1 <- function(x){
   if(x < 79540.3){
     0
   }
   else if (x < 80834.4){
-    0.3*x - 79540.3*0.3
+    0.3*x - 23862.09
   }
   else{
     x - 80446.17
   }
 }
+# punkt 2
 fun2 <- function(x){
   if(x < 72650){
     0
   }
   else if (x < 85200){
-    0.2*x - 72650*0.2
+    0.2*x - 14530
   }
   else if (x < 91300){
     0.3*x -23050
@@ -86,12 +91,13 @@ fun2 <- function(x){
        x - 86960
   }
 }
+# punkt 3
 fun3 <- function(x){
   if(x < 67775.7){
     0
   }
   else if (x < 89012.9){
-    0.2*x - 67775.7*0.2
+    0.2*x - 13555.14
   }
   else if (x < 95962.9){
     0.3*x -21066.43
@@ -100,7 +106,10 @@ fun3 <- function(x){
     x - 88240.46
   }
 }
+
+# wektor mozliwych wynikow
 x <- seq(65000,97000,by=100)
+# zbior punktow z obliczonymi wartosciami dla kazdej dystrybuanty
 df <- data.frame(profit=rep(x,3),
                  prob = c(sapply(x,fun1),
                           sapply(x,fun2),
@@ -109,12 +118,15 @@ df <- data.frame(profit=rep(x,3),
                            rep('p2',length(x)),
                            rep('p3',length(x)))
 )
+# narysuj wykres
 p3 <- ggplot(df,aes(x=profit,y=prob)) +
   geom_line(aes(color=point))+
   xlim(65000,97001)+
   ggtitle("Dystrybuanty drugiego rzêdu")+
   xlab("Zysk")+
   ylab("Prawdopodobieñstwo")
+
+# zapis do pliku
 png('dominacja2.png')
   print(p3)
 dev.off()
